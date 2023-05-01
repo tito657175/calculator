@@ -13,18 +13,42 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     border: 20px;
     border-style: solid;
-    margin: 50px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+#topRow {
+    display:flex;
+    border: gray 10px;
+    border-style: solid;
+    margin: 10px;
+    justify-content: flex-end;
+
+}
+
+#display {
+    display: flex;
+    border: yellow 5px;
+    border-style: solid;
 }
 
 .buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     border: green 10px;
     border-style: solid;
     margin: 10px;
+}
 
+.button {
+    display: flex;
+    border: blue 10px;
+    border-style: solid;
+    margin: 10px;
 }
