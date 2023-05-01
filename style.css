@@ -1,3 +1,26 @@
-p.test{
-    color:brown;
+html, body{
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 20px;
+    border-style: solid;
+    margin: 50px;
+}
+
+.container .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
