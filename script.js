@@ -1,3 +1,3 @@
-let myName = "Tito"
-
-console.log(myName);
+function onClick(button){
+    
+}
