@@ -48,11 +48,7 @@ body {
 
 .button {
     display: flex;
-    padding: 20px;
+    padding: 10px;
     border-style: solid;
-    margin: 10px;
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-items: center; 
+    margin: 7px;
 }
