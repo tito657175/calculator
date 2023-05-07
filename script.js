@@ -2,25 +2,33 @@
     const operators = ["+","-","/","*"];
     let displayed = "";
     let calculatedTotal = 0;
+    let incorrectStartPrompt = "Type a number first ya fu!";
 
 //Initial event listener
 function onClick(button){
     if (operators.includes(button)){
-        displayed += ` ${button} `;
-        return document.getElementById("display").innerHTML = displayed;
+        if (displayed == ""){
+            return document.getElementById("display").innerHTML = incorrectStartPrompt;
+        } else {
+        selectOperator(button)
+       // displayed += ` ${button} `;
+        // return document.getElementById("display").innerHTML = displayed;
+        }
     } else if (button == "=") {
-        return equals();
+        equals();
     } else if (button == "C"){
-        return clear();
+        clear();
     } else {
         calculatedTotal = button;
         displayed += `${button}`;
-        return document.getElementById("display").innerHTML = displayed;
+        return document.getElementById("display").innerHTML 
+        = displayed;
     }
 }
 
 function equals(){
-    return document.getElementById("display").innerHTML = calculatedTotal;
+    return document.getElementById("display").innerHTML 
+    = calculatedTotal;
 }
 
 function clear(){
@@ -28,6 +36,19 @@ function clear(){
     calculatedTotal = 0;
     return document.getElementById("display").innerHTML = "";
 }
+
+function selectOperator(operator){
+    if (operator == "+"){
+        console.log("sum");
+    } else if (operator == "-"){
+        console.log('minus');
+    } else if (operator == "/"){
+        console.log('divide')
+    } else if (operator == "*"){
+        console.log('multiply')
+    }
+};
+
 
 // Notes To Self
 /* store separate variable in ALL but operator of if statement
