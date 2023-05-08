@@ -55,7 +55,13 @@ function selectOperator(operator){
             sum();
         }
     } else if (operator == "-"){
-        console.log('minus');
+        if (temp != calculatedTotal){
+            minus();
+            temp = calculatedTotal;
+            calculatedTotal = '';
+        } else {
+            minus();
+        }
     } else if (operator == "/"){
         console.log('divide')
     } else if (operator == "*"){
@@ -66,3 +72,8 @@ function selectOperator(operator){
 function sum(){
     calculatedTotal = calculatedTotal + temp;
 };
+
+function minus(){
+    calculatedTotal = calculatedTotal - temp;
+}
+
