@@ -1,7 +1,7 @@
 //Global Variables
     const operators = ["+","-","/","*"];
     let displayed = "";
-    let calculatedTotal = 0;
+    let calculatedTotal = '';
     let incorrectStartPrompt = "Type a number first ya fu!";
     const displayElement = document.getElementById("display");
 
@@ -23,7 +23,7 @@ function onClick(button){
     } else if (button == "C"){
         clear();
     } else {
-        calculatedTotal += `${button}`;
+        calculatedTotal = calculatedTotal + `${button}`;
         displayed += `${button}`;
         return displayElement.innerHTML = displayed;
     }
@@ -33,13 +33,14 @@ function equals(){
     calculatedTotal = temp + parseInt(calculatedTotal);
     displayElement.innerHTML = calculatedTotal;
     displayed = "";
-    calculatedTotal = 0;
+    calculatedTotal = '';
     temp = 0;
 }
 
 function clear(){
     displayed = "";
-    calculatedTotal = 0;
+    calculatedTotal = '';
+    temp = 0;
     return displayElement.innerHTML = displayed;
 }
 
@@ -49,7 +50,7 @@ function selectOperator(operator){
         if (temp != calculatedTotal){
             sum();
             temp = calculatedTotal;
-            calculatedTotal = 0;
+            calculatedTotal = '';
         } else {
             sum();
         }
@@ -65,9 +66,3 @@ function selectOperator(operator){
 function sum(){
     calculatedTotal = calculatedTotal + temp;
 };
-
-// Notes To Self
-/* store separate variable in ALL but operator of if statement
-    this will NOT be the display variable
-    screw it just re-read the prompt
-*/
