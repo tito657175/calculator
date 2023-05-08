@@ -1,23 +1,23 @@
 //Global Variables
-    const operators = ["+","-","/","*"];
-    let displayed = "";
-    let arrayNumbers = [];
-    let newNumber = 0;
-    let incorrectStartPrompt = "Type a number first ya fu!";
-    let oldNumber = 0;
-    const displayElement = document.getElementById("display");
+const operators = ["+","-","/","*"];
+let displayed = "";
+let arrayNumbers = [];
+let newNumber = 0;
+let incorrectStartPrompt = "Type a number first ya fu!";
+let oldNumber = 0;
+const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
-    // Any Operator button
-    if (operators.includes(button)){
-        if (displayed == ""){
-            return displayElement.innerHTML = incorrectStartPrompt;
-        } else {
-            displayed += ` ${button} `;
-            displayElement.innerHTML = displayed;
-            selectOperator(button);
-        }
+// Any Operator button
+if (operators.includes(button)){
+    if (displayed == ""){
+        return displayElement.innerHTML = incorrectStartPrompt;
+    } else {
+        displayed += ` ${button} `;
+        displayElement.innerHTML = displayed;
+        selectOperator(button);
+    }
     //Equals button
     } else if (button == "=") {
         equals();
@@ -50,25 +50,25 @@ function clear(){
 }
 
 function selectOperator(operator){
-    if (operator == "+"){ 
-        newNumber = parseInt(arrayNumbers.join(''))
-        if (oldNumber != newNumber){
-            sum();
-            oldNumber = newNumber;
-            arrayNumbers = [];
-        } else {
-            sum();
-        }
-    } else if (operator == "-"){
-        newNumber = parseInt(arrayNumbers.join(''))
-            minus();
-            oldNumber = newNumber;
-            arrayNumbers = [];
-    } else if (operator == "/"){
-        console.log('divide')
-    } else if (operator == "*"){
-        console.log('multiply')
+if (operator == "+"){ 
+    newNumber = parseInt(arrayNumbers.join(''))
+    if (oldNumber != newNumber){
+        sum();
+        oldNumber = newNumber;
+        arrayNumbers = [];
+    } else {
+        sum();
     }
+} else if (operator == "-"){
+    newNumber = parseInt(arrayNumbers.join(''))
+        minus();
+        oldNumber = newNumber;
+        arrayNumbers = [];
+} else if (operator == "/"){
+    console.log('divide')
+} else if (operator == "*"){
+    console.log('multiply')
+}
 };
 
 function sum(){
@@ -78,4 +78,3 @@ function sum(){
 function minus(){
     newNumber -= oldNumber;
 }
-
