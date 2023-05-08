@@ -1,12 +1,11 @@
 //Global Variables
     const operators = ["+","-","/","*"];
     let displayed = "";
-    let arrayIntTotal = [];
-    let longNumber = 0;
+    let arrayNumbers = [];
+    let newNumber = 0;
     let incorrectStartPrompt = "Type a number first ya fu!";
+    let oldNumber = 0;
     const displayElement = document.getElementById("display");
-
-    let temp = 0;
 
 //Initial event listener
 function onClick(button){
@@ -27,48 +26,44 @@ function onClick(button){
         clear();
     //Any number button
     } else {
-        arrayIntTotal.push(button);
+        arrayNumbers.push(button);
         displayed += `${button}`;
         return displayElement.innerHTML = displayed;
     }
 }
 
 function equals(){
-    longNumber = temp + parseInt(arrayIntTotal.join(''));
-    displayElement.innerHTML = longNumber;
+    newNumber = oldNumber + parseInt(arrayNumbers.join(''));
+    displayElement.innerHTML = newNumber;
     displayed = "";
-    arrayIntTotal = [];
-    longNumber = 0;
-    temp = 0;
+    arrayNumbers = [];
+    newNumber = 0;
+    oldNumber = 0;
 }
 
 function clear(){
     displayed = "";
-    arrayIntTotal = [];
-    longNumber = 0;
-    temp = 0;
+    arrayNumbers = [];
+    newNumber = 0;
+    oldNumber = 0;
     return displayElement.innerHTML = displayed;
 }
 
 function selectOperator(operator){
     if (operator == "+"){ 
-        if (temp != parseInt(arrayIntTotal.join(''))){
-            longNumber = parseInt(arrayIntTotal.join(''));
+        newNumber = parseInt(arrayNumbers.join(''))
+        if (oldNumber != newNumber){
             sum();
-            temp = longNumber;
-            arrayIntTotal = [];
+            oldNumber = newNumber;
+            arrayNumbers = [];
         } else {
             sum();
         }
     } else if (operator == "-"){
-        if (temp != parseInt(arrayIntTotal.join(''))){
-            longNumber = parseInt(arrayIntTotal.join(''));
+        newNumber = parseInt(arrayNumbers.join(''))
             minus();
-            temp = longNumber;
-            arrayIntTotal = [];
-        } else {
-            minus();
-        }
+            oldNumber = newNumber;
+            arrayNumbers = [];
     } else if (operator == "/"){
         console.log('divide')
     } else if (operator == "*"){
@@ -77,10 +72,10 @@ function selectOperator(operator){
 };
 
 function sum(){
-    longNumber = longNumber + temp;
+    newNumber += oldNumber;
 };
 
 function minus(){
-    longNumber = longNumber - temp;
+    newNumber -= oldNumber;
 }
 
