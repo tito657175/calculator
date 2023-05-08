@@ -2,9 +2,9 @@
 const operators = ["+","-","/","*"];
 let displayed = "";
 let arrayNumbers = [];
-let newNumber = 0;
+let secondNumber = 0;
 let incorrectStartPrompt = "Type a number first ya fu!";
-let oldNumber = 0;
+let firstNumber = 0;
 const displayElement = document.getElementById("display");
 
 //Initial event listener
@@ -33,36 +33,36 @@ if (operators.includes(button)){
 }
 
 function equals(){
-    newNumber = oldNumber + parseInt(arrayNumbers.join(''));
-    displayElement.innerHTML = newNumber;
+    secondNumber = firstNumber + parseInt(arrayNumbers.join(''));
+    displayElement.innerHTML = secondNumber;
     displayed = "";
     arrayNumbers = [];
-    newNumber = 0;
-    oldNumber = 0;
+    secondNumber = 0;
+    firstNumber = 0;
 }
 
 function clear(){
     displayed = "";
     arrayNumbers = [];
-    newNumber = 0;
-    oldNumber = 0;
+    secondNumber = 0;
+    firstNumber = 0;
     return displayElement.innerHTML = displayed;
 }
 
 function selectOperator(operator){
 if (operator == "+"){ 
-    newNumber = parseInt(arrayNumbers.join(''))
-    if (oldNumber != newNumber){
+    secondNumber = parseInt(arrayNumbers.join(''))
+    if (firstNumber != secondNumber){
         sum();
-        oldNumber = newNumber;
+        firstNumber = secondNumber;
         arrayNumbers = [];
     } else {
         sum();
     }
 } else if (operator == "-"){
-    newNumber = parseInt(arrayNumbers.join(''))
+    secondNumber = parseInt(arrayNumbers.join(''))
         minus();
-        oldNumber = newNumber;
+        firstNumber = secondNumber;
         arrayNumbers = [];
 } else if (operator == "/"){
     console.log('divide')
@@ -72,9 +72,10 @@ if (operator == "+"){
 };
 
 function sum(){
-    newNumber += oldNumber;
+    secondNumber += firstNumber;
 };
 
 function minus(){
-    newNumber -= oldNumber;
+    firstNumber = -firstNumber;
+    secondNumber += firstNumber;
 }
