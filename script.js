@@ -1,67 +1,69 @@
 //Global Variables
     const operators = ["+","-","/","*"];
     let displayed = "";
-    let calculatedTotal = '';
+    let arrayNumbers = [];
+    let newNumber = 0;
     let incorrectStartPrompt = "Type a number first ya fu!";
+    let oldNumber = 0;
     const displayElement = document.getElementById("display");
-
-    let temp = 0;
 
 //Initial event listener
 function onClick(button){
+    // Any Operator button
     if (operators.includes(button)){
         if (displayed == ""){
             return displayElement.innerHTML = incorrectStartPrompt;
         } else {
             displayed += ` ${button} `;
             displayElement.innerHTML = displayed;
-            calculatedTotal = parseInt(calculatedTotal);
             selectOperator(button);
         }
+    //Equals button
     } else if (button == "=") {
         equals();
+    //Clear button
     } else if (button == "C"){
         clear();
+    //Any number button
     } else {
-        calculatedTotal = calculatedTotal + `${button}`;
+        arrayNumbers.push(button);
         displayed += `${button}`;
         return displayElement.innerHTML = displayed;
     }
 }
 
 function equals(){
-    calculatedTotal = temp + parseInt(calculatedTotal);
-    displayElement.innerHTML = calculatedTotal;
+    newNumber = oldNumber + parseInt(arrayNumbers.join(''));
+    displayElement.innerHTML = newNumber;
     displayed = "";
-    calculatedTotal = '';
-    temp = 0;
+    arrayNumbers = [];
+    newNumber = 0;
+    oldNumber = 0;
 }
 
 function clear(){
     displayed = "";
-    calculatedTotal = '';
-    temp = 0;
+    arrayNumbers = [];
+    newNumber = 0;
+    oldNumber = 0;
     return displayElement.innerHTML = displayed;
 }
 
-
 function selectOperator(operator){
     if (operator == "+"){ 
-        if (temp != calculatedTotal){
+        newNumber = parseInt(arrayNumbers.join(''))
+        if (oldNumber != newNumber){
             sum();
-            temp = calculatedTotal;
-            calculatedTotal = '';
+            oldNumber = newNumber;
+            arrayNumbers = [];
         } else {
             sum();
         }
     } else if (operator == "-"){
-        if (temp != calculatedTotal){
+        newNumber = parseInt(arrayNumbers.join(''))
             minus();
-            temp = calculatedTotal;
-            calculatedTotal = '';
-        } else {
-            minus();
-        }
+            oldNumber = newNumber;
+            arrayNumbers = [];
     } else if (operator == "/"){
         console.log('divide')
     } else if (operator == "*"){
@@ -70,10 +72,10 @@ function selectOperator(operator){
 };
 
 function sum(){
-    calculatedTotal = calculatedTotal + temp;
+    newNumber += oldNumber;
 };
 
 function minus(){
-    calculatedTotal = calculatedTotal - temp;
+    newNumber -= oldNumber;
 }
 
