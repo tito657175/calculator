@@ -4,8 +4,9 @@ let displayed = "";
 let arrayNumbers = [];
 let secondNumber = 0;
 let incorrectStartPrompt = "Type a number first ya fu!";
-let firstNumber = 0;
+let firstNumber = 'empty';
 const displayElement = document.getElementById("display");
+let total = 0;
 
 //Initial event listener
 function onClick(button){
@@ -51,23 +52,45 @@ function clear(){
 
 function selectOperator(operator){
 if (operator == "+"){ 
-    secondNumber = parseInt(arrayNumbers.join(''))
-    if (firstNumber != secondNumber){
-        sum();
-        firstNumber = secondNumber;
+    if (firstNumber == 'empty'){
+        firstNumber = parseInt(arrayNumbers.join(''))
         arrayNumbers = [];
     } else {
-        sum();
+    secondNumber = parseInt(arrayNumbers.join(''))
+    total = firstNumber + secondNumber;
+    firstNumber = total;
+    arrayNumbers = [];
     }
 } else if (operator == "-"){
-    secondNumber = parseInt(arrayNumbers.join(''))
-        minus();
-        firstNumber = secondNumber;
+    if (firstNumber == 'empty'){
+        firstNumber = parseInt(arrayNumbers.join(''))
         arrayNumbers = [];
+    } else {
+    secondNumber = parseInt(arrayNumbers.join(''))
+    total = firstNumber - secondNumber;
+    firstNumber = total;
+    arrayNumbers = [];
+    }
 } else if (operator == "/"){
-    console.log('divide')
+    if (firstNumber == 'empty'){
+        firstNumber = parseInt(arrayNumbers.join(''))
+        arrayNumbers = [];
+    } else {
+    secondNumber = parseInt(arrayNumbers.join(''))
+    total = firstNumber / secondNumber;
+    firstNumber = total;
+    arrayNumbers = [];
+    }
 } else if (operator == "*"){
-    console.log('multiply')
+    if (firstNumber == 'empty'){
+        firstNumber = parseInt(arrayNumbers.join(''))
+        arrayNumbers = [];
+    } else {
+    secondNumber = parseInt(arrayNumbers.join(''))
+    total = firstNumber - secondNumber;
+    firstNumber = total;
+    arrayNumbers = [];
+    }
 }
 };
 
@@ -75,7 +98,14 @@ function sum(){
     secondNumber += firstNumber;
 };
 
-function minus(){
-    firstNumber = -firstNumber;
-    secondNumber += firstNumber;
+function performOperation(operator){
+    if (firstNumber == 'empty'){
+        firstNumber = parseInt(arrayNumbers.join(''))
+        arrayNumbers = [];
+    } else {
+    secondNumber = parseInt(arrayNumbers.join(''))
+    total = firstNumber - secondNumber;
+    firstNumber = total;
+    arrayNumbers = [];
+    }
 }
