@@ -1,5 +1,6 @@
 //Global Variables
 const operators = ["+","-","/","*"];
+let oldOperator = null;
 let displayed = "";
 let arrayNumbers = [];
 let firstNumber = 'empty';
@@ -12,26 +13,29 @@ const displayElement = document.getElementById("display");
 function onClick(button){
 // Any Operator button
 if (operators.includes(button)){
-    if (displayed == ""){
-        displayElement.innerHTML = incorrectStartPrompt;
-    } else {
-        displayed += ` ${button} `;
-        displayElement.innerHTML = displayed;
-        selectOperator(button);
+    if (oldOperator == null){
+        oldOperator = button;
     }
-    //Equals button
-    } else if (button == "=") {
-        equals();
-    //Clear button
-    } else if (button == "C"){
-        clear();
-    //Any number button
-    } else {
-        arrayNumbers.push(button);
-        displayed += `${button}`;
-        displayElement.innerHTML = displayed;
-    }
-}
+        if (displayed == ""){
+            displayElement.innerHTML = incorrectStartPrompt;
+        } else {
+            displayed += ` ${button} `;
+            displayElement.innerHTML = displayed;
+            selectOperator(button);
+        }
+        //Equals button
+        } else if (button == "=") {
+            equals();
+        //Clear button
+        } else if (button == "C"){
+            clear();
+        //Any number button
+        } else {
+            arrayNumbers.push(button);
+            displayed += `${button}`;
+            displayElement.innerHTML = displayed;
+        }
+        }
 
 function equals(){
     if (total == 0){
@@ -48,6 +52,7 @@ function clear(){
 }
 
 function selectOperator(operator){
+
 if (operator == "+"){ 
     if (firstNumber == 'empty'){
         firstNumber = parseInt(arrayNumbers.join(''))
