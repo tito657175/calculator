@@ -2,18 +2,18 @@
 const operators = ["+","-","/","*"];
 let displayed = "";
 let arrayNumbers = [];
-let secondNumber = 0;
-let incorrectStartPrompt = "Type a number first ya fu!";
 let firstNumber = 'empty';
-const displayElement = document.getElementById("display");
+let secondNumber = 0;
 let total = 0;
+let incorrectStartPrompt = "Type a number first ya fu!";
+const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
 // Any Operator button
 if (operators.includes(button)){
     if (displayed == ""){
-        return displayElement.innerHTML = incorrectStartPrompt;
+        displayElement.innerHTML = incorrectStartPrompt;
     } else {
         displayed += ` ${button} `;
         displayElement.innerHTML = displayed;
@@ -29,25 +29,22 @@ if (operators.includes(button)){
     } else {
         arrayNumbers.push(button);
         displayed += `${button}`;
-        return displayElement.innerHTML = displayed;
+        displayElement.innerHTML = displayed;
     }
 }
 
 function equals(){
-    secondNumber = firstNumber + parseInt(arrayNumbers.join(''));
-    displayElement.innerHTML = secondNumber;
-    displayed = "";
-    arrayNumbers = [];
-    secondNumber = 0;
-    firstNumber = 0;
+    if (total == 0){
+        secondNumber = parseInt(arrayNumbers.join(''));
+        total = firstNumber + secondNumber;
+    }
+    displayElement.innerHTML = total;
+    resetDefault();
 }
 
 function clear(){
-    displayed = "";
-    arrayNumbers = [];
-    secondNumber = 0;
-    firstNumber = 0;
-    return displayElement.innerHTML = displayed;
+    resetDefault();
+    displayElement.innerHTML = displayed;
 }
 
 function selectOperator(operator){
@@ -61,6 +58,7 @@ if (operator == "+"){
     firstNumber = total;
     arrayNumbers = [];
     }
+
 } else if (operator == "-"){
     if (firstNumber == 'empty'){
         firstNumber = parseInt(arrayNumbers.join(''))
@@ -71,6 +69,7 @@ if (operator == "+"){
     firstNumber = total;
     arrayNumbers = [];
     }
+
 } else if (operator == "/"){
     if (firstNumber == 'empty'){
         firstNumber = parseInt(arrayNumbers.join(''))
@@ -81,31 +80,24 @@ if (operator == "+"){
     firstNumber = total;
     arrayNumbers = [];
     }
+
 } else if (operator == "*"){
     if (firstNumber == 'empty'){
         firstNumber = parseInt(arrayNumbers.join(''))
         arrayNumbers = [];
     } else {
     secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber - secondNumber;
+    total = firstNumber * secondNumber;
     firstNumber = total;
     arrayNumbers = [];
     }
 }
 };
 
-function sum(){
-    secondNumber += firstNumber;
-};
-
-function performOperation(operator){
-    if (firstNumber == 'empty'){
-        firstNumber = parseInt(arrayNumbers.join(''))
-        arrayNumbers = [];
-    } else {
-    secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber - secondNumber;
-    firstNumber = total;
+function resetDefault(){
+    displayed = "";
     arrayNumbers = [];
-    }
+    firstNumber = 'empty';
+    secondNumber = 0;
+    total = 0;
 }
