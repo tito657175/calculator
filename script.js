@@ -13,10 +13,7 @@ const displayElement = document.getElementById("display");
 function onClick(button){
 // Any Operator button
 if (operators.includes(button)){
-    if (oldOperator == null){
-        oldOperator = button;
-    }
-        if (displayed == ""){
+    if (displayed == ""){
             displayElement.innerHTML = incorrectStartPrompt;
         } else {
             displayed += ` ${button} `;
