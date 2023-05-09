@@ -1,34 +1,38 @@
 //Global Variables
 const operators = ["+","-","/","*"];
-let oldOperator = null;
+let firstOperator = null;
 let displayed = "";
 let arrayNumbers = [];
-let firstNumber = 'empty';
-let secondNumber = 0;
-let total = 0;
+let firstNumber = null;
+let secondNumber = null;
+let total = null;
 let incorrectStartPrompt = "Type a number first ya fu!";
 const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
     if (operators.includes(button)){
-        if (displayed == ""){
-            displayElement.innerHTML = incorrectStartPrompt;
-        } else { 
-            displayed += ` ${button} `;
-            displayElement.innerHTML = displayed;
-            selectOperator(button);
-        }
+        displayed += ` ${button} `;
+        displayElement.innerHTML = displayed;
+        selectOperator(button);
     } else if (button == "=") {
         equals();
     } else if (button == "C"){
         clear();
     } else {
-        arrayNumbers.push(button);
-        displayed += `${button}`;
-        displayElement.innerHTML = displayed;
+        number(button);
     }
+}
+
+function number(numberButton){
+    if(total == firstNumber){
+        //if number is selected after total is displayed
+        firstNumber = button;
     }
+    arrayNumbers.push(numberButton);
+    displayed += `${numberButton}`;
+    displayElement.innerHTML = displayed;
+}
 
 function equals(){
     if (total == 0){
@@ -44,51 +48,51 @@ function clear(){
     displayElement.innerHTML = displayed;
 }
 
-function selectOperator(operator){
+function selectOperator(operatorButton){
 
-if (operator == "+"){ 
-    if (firstNumber == 'empty'){
-        firstNumber = parseInt(arrayNumbers.join(''))
+        if (operatorButton == "+"){ 
+        if (firstNumber == 'empty'){
+            firstNumber = parseInt(arrayNumbers.join(''))
+            arrayNumbers = [];
+        } else {
+        secondNumber = parseInt(arrayNumbers.join(''))
+        total = firstNumber + secondNumber;
+        firstNumber = total;
         arrayNumbers = [];
-    } else {
-    secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber + secondNumber;
-    firstNumber = total;
-    arrayNumbers = [];
-    }
+        }
 
-} else if (operator == "-"){
-    if (firstNumber == 'empty'){
-        firstNumber = parseInt(arrayNumbers.join(''))
+        } else if (operatorButton == "-"){
+        if (firstNumber == 'empty'){
+            firstNumber = parseInt(arrayNumbers.join(''))
+            arrayNumbers = [];
+        } else {
+        secondNumber = parseInt(arrayNumbers.join(''))
+        total = firstNumber - secondNumber;
+        firstNumber = total;
         arrayNumbers = [];
-    } else {
-    secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber - secondNumber;
-    firstNumber = total;
-    arrayNumbers = [];
-    }
+        }
 
-} else if (operator == "/"){
-    if (firstNumber == 'empty'){
-        firstNumber = parseInt(arrayNumbers.join(''))
+        } else if (operator == "/"){
+        if (firstNumber == 'empty'){
+            firstNumber = parseInt(arrayNumbers.join(''))
+            arrayNumbers = [];
+        } else {
+        secondNumber = parseInt(arrayNumbers.join(''))
+        total = firstNumber / secondNumber;
+        firstNumber = total;
         arrayNumbers = [];
-    } else {
-    secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber / secondNumber;
-    firstNumber = total;
-    arrayNumbers = [];
-    }
+        }
 
-} else if (operator == "*"){
-    if (firstNumber == 'empty'){
-        firstNumber = parseInt(arrayNumbers.join(''))
+        } else if (operator == "*"){
+        if (firstNumber == 'empty'){
+            firstNumber = parseInt(arrayNumbers.join(''))
+            arrayNumbers = [];
+        } else {
+        secondNumber = parseInt(arrayNumbers.join(''))
+        total = firstNumber * secondNumber;
+        firstNumber = total;
         arrayNumbers = [];
-    } else {
-    secondNumber = parseInt(arrayNumbers.join(''))
-    total = firstNumber * secondNumber;
-    firstNumber = total;
-    arrayNumbers = [];
-    }
+        }
 }
 };
 
