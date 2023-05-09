@@ -11,28 +11,24 @@ const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
-// Any Operator button
-if (operators.includes(button)){
-    if (displayed == ""){
+    if (operators.includes(button)){
+        if (displayed == ""){
             displayElement.innerHTML = incorrectStartPrompt;
-        } else {
+        } else { 
             displayed += ` ${button} `;
             displayElement.innerHTML = displayed;
             selectOperator(button);
         }
-        //Equals button
-        } else if (button == "=") {
-            equals();
-        //Clear button
-        } else if (button == "C"){
-            clear();
-        //Any number button
-        } else {
-            arrayNumbers.push(button);
-            displayed += `${button}`;
-            displayElement.innerHTML = displayed;
-        }
-        }
+    } else if (button == "=") {
+        equals();
+    } else if (button == "C"){
+        clear();
+    } else {
+        arrayNumbers.push(button);
+        displayed += `${button}`;
+        displayElement.innerHTML = displayed;
+    }
+    }
 
 function equals(){
     if (total == 0){
