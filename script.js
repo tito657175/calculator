@@ -1,6 +1,7 @@
 //Global Variables
 const operators = ["+","-","/","*"];
 let firstOperator = null;
+let nextOperator = null;
 let displayed = "";
 let arrayNumbers = [];
 let firstNumber = null;
@@ -15,15 +16,19 @@ function onClick(button){
         displayed += ` ${button} `;
         displayElement.innerHTML = displayed;
         // if first time selecting operator (1,3,5th etc)
-        if(secondNumber == null){
+        if(firstOperator == null && secondNumber == null){
             firstNumber = parseInt(arrayNumbers.join(''));
             firstOperator = button;
             arrayNumbers = [];
         } else {
-            if(secondNumber == null){
+            if(firstOperator !== null && secondNumber == null){
                 secondNumber = parseInt(arrayNumbers.join(''));
+                nextOperator = button;
             }
             selectOperator(firstNumber,firstOperator,secondNumber);
+            firstOperator = nextOperator;
+            nextOperator = null;
+            secondNumber = null;
         }
     } else if (button == "=") {
         equals();
@@ -60,13 +65,13 @@ function clear(){
 
 function selectOperator(a,operatorButton,b){
     if (operatorButton == "+"){ 
-        total = firstNumber + secondNumber;
-        firstNumber = total;
+        let result = firstNumber + secondNumber;
+        firstNumber = result;
         arrayNumbers = [];
 
     } else if (operatorButton == "-"){
-        total = firstNumber - secondNumber;
-        firstNumber = total;
+        let result = firstNumber - secondNumber;
+        firstNumber = result;
         arrayNumbers = [];
 
     } else if (operatorButton == "/"){
@@ -74,15 +79,16 @@ function selectOperator(a,operatorButton,b){
             displayed = `You Can't Divide by Zero, Ya FU!`;
             displayElement.innerHTML = displayed;
         } else {
-        total = firstNumber / secondNumber;
-        firstNumber = total;
+        let result = firstNumber / secondNumber;
+        firstNumber = result;
         arrayNumbers = [];
         }
     } else if (operatorButton == "*"){
-        total = firstNumber * secondNumber;
-        firstNumber = total;
-        arrayNumbers = [];   
+        let result = firstNumber * secondNumber;
+        firstNumber = result;
+        arrayNumbers = []; 
     }
+    total = firstNumber; 
 };
 
 function resetDefault(localTotal){
@@ -91,6 +97,8 @@ function resetDefault(localTotal){
     firstNumber = null;
     secondNumber = null;
     total = null;
+    firstOperator = null;
+    secondOperator = null;
 }
 
 /* come back later to completely rework code
