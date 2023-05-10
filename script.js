@@ -31,9 +31,9 @@ function onClick(button){
             secondNumber = null;
         }
     } else if (button == "=") {
-        equals();
+        equals(button);
     } else if (button == "C"){
-        clear();
+        clear(button);
     } else {
         number(button);
     }
@@ -45,21 +45,24 @@ function number(numberButton){
     displayElement.innerHTML = displayed;
 
     if(firstOperator == null){
+        //so that when equals + number, number replaces all including new total
+        total = null; 
         return;
     }
 }
 
-function equals(){
-    if (total == null){
-        secondNumber = parseInt(arrayNumbers.join(''));
-        total = selectOperator(firstNumber,firstOperator,secondNumber);
-    }
-    resetDefault(total);
-    displayElement.innerHTML = total;
+function equals(equalsButton){
+    secondNumber = parseInt(arrayNumbers.join(''));
+    selectOperator(firstNumber,firstOperator,secondNumber);
+    resetDefault(equalsButton);
+    //Keep running total
+    displayElement.innerHTML = displayed;
 }
 
-function clear(){
-    resetDefault('');
+function clear(clearButton){
+    resetDefault(clearButton);
+    //HARD RESET
+    total = null;
     displayElement.innerHTML = displayed;
 }
 
@@ -91,14 +94,24 @@ function selectOperator(a,operatorButton,b){
     total = firstNumber; 
 };
 
-function resetDefault(localTotal){
-    displayed = localTotal;
-    arrayNumbers = [];
-    firstNumber = null;
-    secondNumber = null;
-    total = null;
-    firstOperator = null;
-    secondOperator = null;
+function resetDefault(button){
+    if (button == "="){
+        displayed += `= ${total}`;
+        arrayNumbers = [];
+        secondNumber = null;
+        firstOperator = null;
+        secondOperator = null;
+    } else if(button == "C"){
+        //Hard Reset
+        displayed = "";
+        arrayNumbers = [];
+        firstNumber = null;
+        secondNumber = null;
+        firstOperator = null;
+        secondOperator = null;
+        total = null;
+    }
+    
 }
 
 /* come back later to completely rework code
