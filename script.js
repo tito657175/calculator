@@ -14,7 +14,17 @@ function onClick(button){
     if (operators.includes(button)){
         displayed += ` ${button} `;
         displayElement.innerHTML = displayed;
-        selectOperator(button);
+        // if first time selecting operator (1,3,5th etc)
+        if(secondNumber == null){
+            firstNumber = parseInt(arrayNumbers.join(''));
+            firstOperator = button;
+            arrayNumbers = [];
+        } else {
+            if(secondNumber == null){
+                secondNumber = parseInt(arrayNumbers.join(''));
+            }
+            selectOperator(firstNumber,firstOperator,secondNumber);
+        }
     } else if (button == "=") {
         equals();
     } else if (button == "C"){
@@ -25,83 +35,62 @@ function onClick(button){
 }
 
 function number(numberButton){
-    if(total == firstNumber){
-        //if number is selected after total is displayed
-        firstNumber = button;
-    }
     arrayNumbers.push(numberButton);
     displayed += `${numberButton}`;
     displayElement.innerHTML = displayed;
+
+    if(firstOperator == null){
+        return;
+    }
 }
 
 function equals(){
-    if (total == 0){
+    if (total == null){
         secondNumber = parseInt(arrayNumbers.join(''));
-        total = firstNumber + secondNumber;
+        total = selectOperator(firstNumber,firstOperator,secondNumber);
     }
+    resetDefault(total);
     displayElement.innerHTML = total;
-    resetDefault();
 }
 
 function clear(){
-    resetDefault();
+    resetDefault('');
     displayElement.innerHTML = displayed;
 }
 
-function selectOperator(operatorButton){
-
-        if (operatorButton == "+"){ 
-        if (firstNumber == 'empty'){
-            firstNumber = parseInt(arrayNumbers.join(''))
-            arrayNumbers = [];
-        } else {
-        secondNumber = parseInt(arrayNumbers.join(''))
+function selectOperator(a,operatorButton,b){
+    if (operatorButton == "+"){ 
         total = firstNumber + secondNumber;
         firstNumber = total;
         arrayNumbers = [];
-        }
 
-        } else if (operatorButton == "-"){
-        if (firstNumber == 'empty'){
-            firstNumber = parseInt(arrayNumbers.join(''))
-            arrayNumbers = [];
-        } else {
-        secondNumber = parseInt(arrayNumbers.join(''))
+    } else if (operatorButton == "-"){
         total = firstNumber - secondNumber;
         firstNumber = total;
         arrayNumbers = [];
-        }
 
-        } else if (operator == "/"){
-        if (firstNumber == 'empty'){
-            firstNumber = parseInt(arrayNumbers.join(''))
-            arrayNumbers = [];
+    } else if (operatorButton == "/"){
+        if (secondNumber == 0){
+            displayed = `You Can't Divide by Zero, Ya FU!`;
+            displayElement.innerHTML = displayed;
         } else {
-        secondNumber = parseInt(arrayNumbers.join(''))
         total = firstNumber / secondNumber;
         firstNumber = total;
         arrayNumbers = [];
         }
-
-        } else if (operator == "*"){
-        if (firstNumber == 'empty'){
-            firstNumber = parseInt(arrayNumbers.join(''))
-            arrayNumbers = [];
-        } else {
-        secondNumber = parseInt(arrayNumbers.join(''))
+    } else if (operatorButton == "*"){
         total = firstNumber * secondNumber;
         firstNumber = total;
-        arrayNumbers = [];
-        }
-}
+        arrayNumbers = [];   
+    }
 };
 
-function resetDefault(){
-    displayed = "";
+function resetDefault(localTotal){
+    displayed = localTotal;
     arrayNumbers = [];
-    firstNumber = 'empty';
-    secondNumber = 0;
-    total = 0;
+    firstNumber = null;
+    secondNumber = null;
+    total = null;
 }
 
 /* come back later to completely rework code
@@ -112,16 +101,17 @@ goal is to make the calculations work as follows
     if total = firstNumber
         firstNumber = button
         display update
+        **maybe array reset
     // for first operator ever
-    if operator (firstOperator == null)
+    *** (skipped)if operator (firstOperator == null)
         return (do nothing)
 
-2. button = first operator
+2. first operator
         if secondNumber  == null
             skip calculate()
         button = first operator
 
-3. button = second numbers
+3. Button = second numbers
     if button = operator
         skips calculation() cuz second still = null
         button = first operator (replace existing operator on display)
