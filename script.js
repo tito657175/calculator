@@ -11,22 +11,27 @@ let total = null;
 let equalsTracker = 0; // keeps track of hen equals is used
 let buttonTracker = null;
 const displayElement = document.getElementById("display");
+const displayCustom = document.getElementById("custom_message");
 
 // All Prompts
-let incorrectStartPrompt = "Type a number first ya foo!";
-let divideByZeroPrompt = `You Can't Divide By Zero, Ya Foo!`;
+const incorrectStartPrompt = "Type A Number First Ya Foo!";
+const divideByZeroPrompt = "You Can't Divide By Zero, Ya Foo!";
+const doubleClick = 'You Already Clicked That, Ya Double Click Foo'; 
 
 //Initial event listener
 function onClick(button){
     //checks for repeats that are not numbers
     if (!allNumbers.includes(button) && button == buttonTracker){
+        displayCustom.innerHTML = doubleClick;
         return
     // tracks first new button
     } else if (!allNumbers.includes(button) && buttonTracker == null){
         buttonTracker = button; //logs first non-number
+        displayCustom.innerHTML = '';
         taskManager(button);
     //start process unaffected by above
     } else {
+        displayCustom.innerHTML = '';
         buttonTracker = null; //clears non-number after number is pressed
         taskManager(button);
     }
