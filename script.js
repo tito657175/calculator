@@ -15,18 +15,18 @@ const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
-//checks for repeats that are not numbers
-if (!allNumbers.includes(button)){
-    if (button == newButton){
+    //checks for repeats that are not numbers
+    if (!allNumbers.includes(button) && button == newButton){
         return
-    } 
-} else {
-        // tracks first new button
-        if(newButton == null) {
+    // tracks first new button
+    } else if (!allNumbers.includes(button) && newButton == null){
         newButton = button;
         taskManager(button);
+    //start process unaffected by above
+    } else {
+        newButton = null;
+        taskManager(button);
     }
-}
 }
 
 function taskManager(button){
@@ -78,7 +78,7 @@ function equals(equalsButton){
     secondNumber = parseInt(arrayNumbers.join(''));
     if (isNaN(secondNumber)){
         secondNumber = 0; // so that if equals + operator + = is used it adds 0 after automatically
-        displayed += `${secondNumber}`
+        displayed += `+ ${secondNumber}`
     } 
     selectOperator(firstNumber,firstOperator,secondNumber);
     resetDefault(equalsButton);
@@ -144,6 +144,7 @@ function resetDefault(button){
     }
     
 }
+
 /* come back later to completely rework code
 goal is to make the calculations work as follows
 
