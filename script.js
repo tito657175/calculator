@@ -1,5 +1,6 @@
 //Global Variables
 const operators = ["+","-","/","*"];
+const otherButtons =['=','C'];
 let firstOperator = null;
 let nextOperator = null;
 let displayed = "";
@@ -7,22 +8,32 @@ let arrayNumbers = [];
 let firstNumber = null;
 let secondNumber = null;
 let total = null;
+let equalsTracker = 0; // keeps track of hen equals is used
+let newButton = null;
 let incorrectStartPrompt = "Type a number first ya fu!";
 const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
+    buttonRepeats(button)
     if (operators.includes(button)){
         displayed += ` ${button} `;
         displayElement.innerHTML = displayed;
         // if first time selecting operator (1,3,5th etc)
         if(firstOperator == null && secondNumber == null){
             firstNumber = parseInt(arrayNumbers.join(''));
+            if (isNaN(firstNumber)){ //can't compare directly NaN
+                firstNumber = total; // for case when equals a total is visible and operator is used next
+            } 
             firstOperator = button;
             arrayNumbers = [];
         } else {
             if(firstOperator !== null && secondNumber == null){
                 secondNumber = parseInt(arrayNumbers.join(''));
+                if (isNaN(secondNumber)){ //can't compare directly NaN
+                    secondNumber = 0; // for case when equals a total is visible and operator is used next
+                    displayed += `${secondNumber}`
+                } 
                 nextOperator = button;
             }
             selectOperator(firstNumber,firstOperator,secondNumber);
@@ -34,25 +45,33 @@ function onClick(button){
         equals(button);
     } else if (button == "C"){
         clear(button);
+    } else if ((button == "")){
+        return;
     } else {
         number(button);
-    }
+    } 
 }
 
 function number(numberButton){
-    arrayNumbers.push(numberButton);
-    displayed += `${numberButton}`;
-    displayElement.innerHTML = displayed;
-
-    if(firstOperator == null){
-        //so that when equals + number, number replaces all including new total
-        total = null; 
-        return;
+    if(equalsTracker >= 1){ //special case for number used after equals
+        equalsTracker = 0;
+        total = null;
+        arrayNumbers.push(numberButton);
+        displayed = `${numberButton}`;
+        displayElement.innerHTML = displayed;
+    } else {
+        arrayNumbers.push(numberButton);
+        displayed += `${numberButton}`;
+        displayElement.innerHTML = displayed;
     }
 }
 
 function equals(equalsButton){
     secondNumber = parseInt(arrayNumbers.join(''));
+    if (isNaN(secondNumber)){
+        secondNumber = 0; // so that if equals + operator + = is used it adds 0 after automatically
+        displayed += `${secondNumber}`
+    } 
     selectOperator(firstNumber,firstOperator,secondNumber);
     resetDefault(equalsButton);
     //Keep running total
@@ -79,7 +98,7 @@ function selectOperator(a,operatorButton,b){
 
     } else if (operatorButton == "/"){
         if (secondNumber == 0){
-            displayed = `You Can't Divide by Zero, Ya FU!`;
+            displayed += `You Can't Divide By Zero, Ya Foo!`;
             displayElement.innerHTML = displayed;
         } else {
         let result = firstNumber / secondNumber;
@@ -91,7 +110,8 @@ function selectOperator(a,operatorButton,b){
         firstNumber = result;
         arrayNumbers = []; 
     }
-    total = firstNumber; 
+    total = firstNumber;
+    equalsTracker = 0; //special case for a+b+.. = total + (this)
 };
 
 function resetDefault(button){
@@ -101,6 +121,7 @@ function resetDefault(button){
         secondNumber = null;
         firstOperator = null;
         secondOperator = null;
+        equalsTracker++;
     } else if(button == "C"){
         //Hard Reset
         displayed = "";
@@ -110,10 +131,22 @@ function resetDefault(button){
         firstOperator = null;
         secondOperator = null;
         total = null;
+        equalsTracker = 0;
+        newButton = null;
     }
     
 }
 
+function buttonRepeats(currentButton){
+    if (newButton = null){
+            newButton = currentButton;
+            return currentButton;
+     } else if (newButton == currentButton && 
+                operators.includes(newButton) &&
+                otherButtons.includes(newButton)){
+            return currentButton = "";
+    }
+}
 /* come back later to completely rework code
 goal is to make the calculations work as follows
 
@@ -163,4 +196,15 @@ goal is to make the calculations work as follows
 6. revert to 
     4. choices
         repeat the loop as needed
+
+
+BUTTON REPEATS
+    store first input
+        if newButton = null;
+            newButton = button
+        else if (newButton == button){
+            return
+        }
+
 */
+
