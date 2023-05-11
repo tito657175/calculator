@@ -115,8 +115,7 @@ function selectOperator(a,operatorButton,b){
 
     } else if (operatorButton == "/"){
         if (secondNumber == 0){
-            displayed += divideByZeroPrompt;
-            displayElement.innerHTML = displayed;
+            displayCustom.innerHTML = divideByZeroPrompt;
         } else {
         let result = firstNumber / secondNumber;
         firstNumber = result;
