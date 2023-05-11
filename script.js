@@ -14,10 +14,12 @@ let incorrectStartPrompt = "Type a number first ya fu!";
 const displayElement = document.getElementById("display");
 
 //Initial event listener
-function onClick(button){
-    buttonRepeats(button)
-    if (operators.includes(button)){
-        displayed += ` ${button} `;
+function onClick(sortedButton){
+    //to use change onClick(button)
+    //let sortedButton = buttonRepeats(button);
+
+    if (operators.includes(sortedButton)){
+        displayed += ` ${sortedButton} `;
         displayElement.innerHTML = displayed;
         // if first time selecting operator (1,3,5th etc)
         if(firstOperator == null && secondNumber == null){
@@ -25,7 +27,7 @@ function onClick(button){
             if (isNaN(firstNumber)){ //can't compare directly NaN
                 firstNumber = total; // for case when equals a total is visible and operator is used next
             } 
-            firstOperator = button;
+            firstOperator = sortedButton;
             arrayNumbers = [];
         } else {
             if(firstOperator !== null && secondNumber == null){
@@ -34,21 +36,21 @@ function onClick(button){
                     secondNumber = 0; // for case when equals a total is visible and operator is used next
                     displayed += `${secondNumber}`
                 } 
-                nextOperator = button;
+                nextOperator = sortedButton;
             }
             selectOperator(firstNumber,firstOperator,secondNumber);
             firstOperator = nextOperator;
             nextOperator = null;
             secondNumber = null;
         }
-    } else if (button == "=") {
-        equals(button);
-    } else if (button == "C"){
-        clear(button);
-    } else if ((button == "")){
-        return;
+    } else if (sortedButton == "=") {
+        equals(sortedButton);
+    } else if (sortedButton == "C"){
+        clear(sortedButton);
+    // } else if ((sortedButton == "nope")){
+       // return;
     } else {
-        number(button);
+        number(sortedButton);
     } 
 }
 
@@ -137,15 +139,17 @@ function resetDefault(button){
     
 }
 
-function buttonRepeats(currentButton){
+// NOT using anymore cuz sucks
+function buttonRepeats(currentButton){ //checks for button repeats
     if (newButton = null){
             newButton = currentButton;
             return currentButton;
      } else if (newButton == currentButton && 
-                operators.includes(newButton) &&
-                otherButtons.includes(newButton)){
-            return currentButton = "";
-    }
+            operators.includes(currentButton) &&
+            otherButtons.includes(currentButton)){
+            newButton = currentButton;
+            return currentButton = "nope";
+    } else return currentButton;
 }
 /* come back later to completely rework code
 goal is to make the calculations work as follows
