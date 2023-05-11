@@ -1,6 +1,5 @@
 //Global Variables
 const operators = ["+","-","/","*"];
-const otherButtons =['=','C'];
 const allNumbers =[0,1,2,3,4,5,6,7,8,9];
 let firstOperator = null;
 let nextOperator = null;
@@ -16,40 +15,51 @@ const displayElement = document.getElementById("display");
 
 //Initial event listener
 function onClick(button){
-    if (operators.includes(button)){
-        displayed += ` ${button} `;
-        displayElement.innerHTML = displayed;
-        // if first time selecting operator (1,3,5th etc)
-        if(firstOperator == null && secondNumber == null){
-            firstNumber = parseInt(arrayNumbers.join(''));
-            if (isNaN(firstNumber)){ //can't compare directly NaN
-                firstNumber = total; // for case when equals a total is visible and operator is used next
-            } 
-            firstOperator = button;
-            arrayNumbers = [];
-        } else {
-            if(firstOperator !== null && secondNumber == null){
-                secondNumber = parseInt(arrayNumbers.join(''));
-                if (isNaN(secondNumber)){ //can't compare directly NaN
-                    secondNumber = 0; // for case when equals a total is visible and operator is used next
-                    displayed += `${secondNumber}`
-                } 
-                nextOperator = button;
-            }
-            selectOperator(firstNumber,firstOperator,secondNumber);
-            firstOperator = nextOperator;
-            nextOperator = null;
-            secondNumber = null;
-        }
-    } else if (button == "=") {
-        equals(button);
-    } else if (button == "C"){
-        clear(button);
-    // } else if ((sortedButton == "nope")){
-       // return;
-    } else {
-        number(button);
+//checks for repeats that are not numbers
+if (!allNumbers.includes(button)){
+    if (button == newButton){
+        return
     } 
+} else {
+        // tracks first new button
+        if(newButton == null) {newButton = button;}
+        // ------------------------------------------
+        if (operators.includes(button)){
+            displayed += ` ${button} `;
+            displayElement.innerHTML = displayed;
+            // if first time selecting operator (1,3,5th etc)
+            if(firstOperator == null && secondNumber == null){
+                firstNumber = parseInt(arrayNumbers.join(''));
+                if (isNaN(firstNumber)){ //can't compare directly NaN
+                    firstNumber = total; // for case when equals a total is visible and operator is used next
+                } 
+                firstOperator = button;
+                arrayNumbers = [];
+            } else {
+                if(firstOperator !== null && secondNumber == null){
+                    secondNumber = parseInt(arrayNumbers.join(''));
+                    if (isNaN(secondNumber)){ //can't compare directly NaN
+                        secondNumber = 0; // for case when equals a total is visible and operator is used next
+                        displayed += `${secondNumber}`
+                    } 
+                    nextOperator = button;
+                }
+                selectOperator(firstNumber,firstOperator,secondNumber);
+                firstOperator = nextOperator;
+                nextOperator = null;
+                secondNumber = null;
+            }
+        } else if (button == "=") {
+            equals(button);
+        } else if (button == "C"){
+            clear(button);
+        // } else if ((sortedButton == "nope")){
+        // return;
+        } else {
+            number(button);
+        } 
+    }
+}
 }
 
 function number(numberButton){
