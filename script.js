@@ -40,7 +40,7 @@ function taskManager(button){
         if(firstOperator == null && secondNumber == null){
             firstNumber = parseInt(arrayNumbers.join(''));
             if (isNaN(firstNumber)){ //can't compare directly NaN
-                firstNumber = total; // for case when equals a total is visible and operator is used next
+                firstNumber = total; // when equals then operator is used next
             } 
             firstOperator = button;
             arrayNumbers = [];
@@ -67,6 +67,7 @@ function number(numberButton){
     if(equalsTracker >= 1){ //special case for number used after equals
         equalsTracker = 0;
         total = null;
+        firstNumber = null;
         arrayNumbers.push(numberButton);
         displayed = `${numberButton}`;
         displayElement.innerHTML = displayed;
@@ -145,67 +146,5 @@ function resetDefault(button){
         equalsTracker = 0;
         buttonTracker = null;
     }
-    
 }
-
-/* come back later to completely rework code
-goal is to make the calculations work as follows
-
-1. button = first numbers
-    //for step 5 in case type number after total
-    if total = firstNumber
-        firstNumber = button
-        display update
-        **maybe array reset
-    // for first operator ever
-    *** (skipped)if operator (firstOperator == null)
-        return (do nothing)
-
-2. first operator
-        if secondNumber  == null
-            skip calculate()
-        button = first operator
-
-3. Button = second numbers
-    if button = operator
-        skips calculation() cuz second still = null
-        button = first operator (replace existing operator on display)
-
-4. choices (now have first, operator, second)(calculate totals)
-    if operator,
-        calculate(a,firstOperator,b)
-            total = first number (first operator) second number
-        firstNumber = total
-        button = firstOperator (replace to new firstOperator)
-
-    if equals,
-        calculate total
-            select which operator function to use
-                total = first number (first operator) second number
-        firstNumber = total
-        first operator = null
-        secondNumber = null
-       *** display = firstNumber (no longer running total)
-    
-5.(NOT HAVE TOTAL HERE)
-    if number
-        due 3. button = secondNumber
-
-    if operator
-        due 2. button = first operator
-            replaces previous operator type
-6. revert to 
-    4. choices
-        repeat the loop as needed
-
-
-BUTTON REPEATS
-    store first input
-        if newButton = null;
-            newButton = button
-        else if (newButton == button){
-            return
-        }
-
-*/
 
