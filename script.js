@@ -22,45 +22,43 @@ if (!allNumbers.includes(button)){
     } 
 } else {
         // tracks first new button
-        if(newButton == null) {newButton = button;}
-        // ------------------------------------------
-        if (operators.includes(button)){
-            displayed += ` ${button} `;
-            displayElement.innerHTML = displayed;
-            // if first time selecting operator (1,3,5th etc)
-            if(firstOperator == null && secondNumber == null){
-                firstNumber = parseInt(arrayNumbers.join(''));
-                if (isNaN(firstNumber)){ //can't compare directly NaN
-                    firstNumber = total; // for case when equals a total is visible and operator is used next
-                } 
-                firstOperator = button;
-                arrayNumbers = [];
-            } else {
-                if(firstOperator !== null && secondNumber == null){
-                    secondNumber = parseInt(arrayNumbers.join(''));
-                    if (isNaN(secondNumber)){ //can't compare directly NaN
-                        secondNumber = 0; // for case when equals a total is visible and operator is used next
-                        displayed += `${secondNumber}`
-                    } 
-                    nextOperator = button;
-                }
-                selectOperator(firstNumber,firstOperator,secondNumber);
-                firstOperator = nextOperator;
-                nextOperator = null;
-                secondNumber = null;
-            }
-        } else if (button == "=") {
-            equals(button);
-        } else if (button == "C"){
-            clear(button);
-        // } else if ((sortedButton == "nope")){
-        // return;
-        } else {
-            number(button);
-        } 
+        if(newButton == null) {
+        newButton = button;
+        taskManager(button);
     }
 }
 }
+
+function taskManager(button){
+    if (operators.includes(button)){
+        displayed += ` ${button} `;
+        displayElement.innerHTML = displayed;
+        // if first time selecting operator (1,3,5th etc)
+        if(firstOperator == null && secondNumber == null){
+            firstNumber = parseInt(arrayNumbers.join(''));
+            if (isNaN(firstNumber)){ //can't compare directly NaN
+                firstNumber = total; // for case when equals a total is visible and operator is used next
+            } 
+            firstOperator = button;
+            arrayNumbers = [];
+        } else {
+            if(firstOperator !== null && secondNumber == null){
+                secondNumber = parseInt(arrayNumbers.join(''));
+                if (isNaN(secondNumber)){ //can't compare directly NaN
+                    secondNumber = 0; // for case when equals a total is visible and operator is used next
+                    displayed += `${secondNumber}`
+                } 
+                nextOperator = button;
+            }
+            selectOperator(firstNumber,firstOperator,secondNumber);
+            firstOperator = nextOperator;
+            nextOperator = null;
+            secondNumber = null;
+        }
+    } else if (button == "=") {equals(button);
+    } else if (button == "C"){clear(button);
+    } else {number(button);} 
+}   
 
 function number(numberButton){
     if(equalsTracker >= 1){ //special case for number used after equals
