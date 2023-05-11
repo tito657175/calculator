@@ -9,22 +9,25 @@ let firstNumber = null;
 let secondNumber = null;
 let total = null;
 let equalsTracker = 0; // keeps track of hen equals is used
-let newButton = null;
-let incorrectStartPrompt = "Type a number first ya fu!";
+let buttonTracker = null;
 const displayElement = document.getElementById("display");
+
+// All Prompts
+let incorrectStartPrompt = "Type a number first ya foo!";
+let divideByZeroPrompt = `You Can't Divide By Zero, Ya Foo!`;
 
 //Initial event listener
 function onClick(button){
     //checks for repeats that are not numbers
-    if (!allNumbers.includes(button) && button == newButton){
+    if (!allNumbers.includes(button) && button == buttonTracker){
         return
     // tracks first new button
-    } else if (!allNumbers.includes(button) && newButton == null){
-        newButton = button;
+    } else if (!allNumbers.includes(button) && buttonTracker == null){
+        buttonTracker = button; //logs first non-number
         taskManager(button);
     //start process unaffected by above
     } else {
-        newButton = null;
+        buttonTracker = null; //clears non-number after number is pressed
         taskManager(button);
     }
 }
@@ -57,7 +60,7 @@ function taskManager(button){
         }
     } else if (button == "=") {equals(button);
     } else if (button == "C"){clear(button);
-    } else {number(button);} 
+    } else {number(button);}
 }   
 
 function number(numberButton){
@@ -77,7 +80,7 @@ function number(numberButton){
 function equals(equalsButton){
     secondNumber = parseInt(arrayNumbers.join(''));
     if (isNaN(secondNumber)){
-        secondNumber = 0; // so that if equals + operator + = is used it adds 0 after automatically
+        secondNumber = 0; // in case = operator is used without two number inputs
         displayed += `+ ${secondNumber}`
     } 
     selectOperator(firstNumber,firstOperator,secondNumber);
@@ -106,7 +109,7 @@ function selectOperator(a,operatorButton,b){
 
     } else if (operatorButton == "/"){
         if (secondNumber == 0){
-            displayed += `You Can't Divide By Zero, Ya Foo!`;
+            displayed += divideByZeroPrompt;
             displayElement.innerHTML = displayed;
         } else {
         let result = firstNumber / secondNumber;
@@ -140,7 +143,7 @@ function resetDefault(button){
         secondOperator = null;
         total = null;
         equalsTracker = 0;
-        newButton = null;
+        buttonTracker = null;
     }
     
 }
